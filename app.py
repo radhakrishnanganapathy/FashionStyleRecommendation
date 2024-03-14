@@ -22,7 +22,7 @@ def recommended(style):
      distance = sorted(list(enumerate(simalrity[index])), reverse=True, key=lambda x:x[1])
      recommended_style = []
      recommended_image = []
-     for i in distance[0:5]:
+     for i in distance[0:20]:
           style_name = styles.iloc[i[0]].productDisplayName
           style_id = styles.iloc[i[0]].id
           recommended_style.append(styles.iloc[i[0]].productDisplayName)
@@ -40,19 +40,32 @@ selection_style = st.selectbox("Select your Fashion",style_list)
 if st.button('Show recommendation'):
      recommended_style,recommended_image  = recommended(selection_style)
 
-     col1,col2,col3,col4,col5 = st.columns(5)
-     with col1:
-         st.text(recommended_style[0])
-         st.image(recommended_image[0])
-     with col2:
-         st.text(recommended_style[1])
-         st.image(recommended_image[1])
-     with col3:
-         st.text(recommended_style[2])
-         st.image(recommended_image[2])
-     with col4:
-         st.text(recommended_style[3])
-         st.image(recommended_image[3])
-     with col5:
-         st.text(recommended_style[4])
-         st.image(recommended_image[4])
+     # col1,col2,col3,col4,col5 = st.columns(5)
+     # with col1:
+     #     st.text(recommended_style[0])
+     #     st.image(recommended_image[0])
+     # with col2:
+     #     st.text(recommended_style[1])
+     #     st.image(recommended_image[1])
+     # with col3:
+     #     st.text(recommended_style[2])
+     #     st.image(recommended_image[2])
+     # with col4:
+     #     st.text(recommended_style[3])
+     #     st.image(recommended_image[3])
+     # with col5:
+     #     st.text(recommended_style[4])
+     #     st.image(recommended_image[4])
+
+     num_recommendation = len(recommended_style)
+     num_col = 5
+     num_rows = -(-num_recommendation // num_col)
+     for row in range(num_rows):
+          cols = st.columns(num_col)
+          for col in range(num_col):
+               index = row * num_col + col
+               if index < num_recommendation:
+                    with cols[col]:
+                         st.text(recommended_style[index])
+                         st.image(recommended_image[index])
+
